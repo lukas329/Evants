@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Event extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'title',
+        'description',
+        'event_date',
+        'event_time',
+        'location',
+        'type',
+        'organizer_id',
+        'price',
+        'sport_id'
+    ];
+
+    public function sport()
+    {
+        return $this->belongsTo(Sport::class);
+    }
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'organizer_id');
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+}
