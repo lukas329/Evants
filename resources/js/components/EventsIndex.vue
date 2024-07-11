@@ -29,7 +29,7 @@
                         <button
                             class="btn btn-primary"
                             @click.stop="joinEvent(event.id)"
-                            :disabled="isJoined(event.id)"
+                            :disabled="event.has_joined"
                         >
                             Join
                         </button>
@@ -52,7 +52,6 @@ export default {
     data() {
         return {
             events: [],
-            joinedEvents: [], // Store joined event IDs
             errorMessage: ''
         };
     },
@@ -65,6 +64,7 @@ export default {
                 .get('/api/events')
                 .then(response => {
                     this.events = response.data;
+                    console.log(this.events);
                 })
                 .catch(error => {
                     console.error('Error fetching events:', error);
@@ -81,7 +81,7 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.joinedEvents.push(eventId);
+                    this.fetchEvents();
                 })
                 .catch(error => {
                     console.error('Error joining event:', error);
@@ -91,9 +91,6 @@ export default {
                         this.errorMessage = 'An error occurred while joining the event.';
                     }
                 });
-        },
-        isJoined(eventId) {
-            return this.joinedEvents.includes(eventId);
         },
         redirectToDetail(eventId) {
             window.location.href = `/events/${eventId}`;

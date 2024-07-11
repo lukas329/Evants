@@ -6,6 +6,7 @@ import EventsDetail from "./components/EventsDetail.vue";
 import CreateNewEvent from "./components/CreateNewEvent.vue";
 import EventsIndex from "./components/EventsIndex.vue";
 import axios from 'axios';
+import EditEvent from "./components/EditEvent.vue";
 
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
@@ -16,6 +17,7 @@ const app = createApp({
         'create-event': CreateNewEvent,
         'events-detail': EventsDetail,
         'events-by-me':EventsByMe,
+        'edit-event': EditEvent
     },
 });
 app.mount('#app');

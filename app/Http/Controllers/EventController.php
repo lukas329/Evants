@@ -97,4 +97,8 @@ class EventController extends Controller
     {
         return view('events.my-events');
     }
+    public function edit()
+    {
+        return view('events.edit');
+    }
 }

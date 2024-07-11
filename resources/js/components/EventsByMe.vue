@@ -20,7 +20,7 @@
                 <tr
                     v-for="event in events"
                     :key="event.event_id"
-                    @click="redirectToDetail(event.event_id)"
+                    @click="redirectToDetail(event.id)"
                     style="cursor: pointer;"
                 >
                     <td>{{ event.title }}</td>
@@ -34,13 +34,13 @@
                     <td>
                         <button
                             class="btn btn-primary"
-                            @click.stop="editEvent(event.event_id)"
+                            @click.stop="editEvent(event.id)"
                         >
                             Edit
                         </button>
                         <button
                             class="btn btn-danger"
-                            @click.stop="deleteEvent(event.event_id)"
+                            @click.stop="deleteEvent(event.id)"
                         >
                             Delete
                         </button>
@@ -89,7 +89,13 @@ export default {
             window.location.href = `/events/${eventId}/edit`;
         },
         deleteEvent(eventId) {
-            // Add your delete logic here
+            axios
+                .delete(`/api/events/${eventId}`)
+                .then(response =>{
+                    console.log(response)
+                }).then(
+                window.location.href = '/events/my-events'
+            )
         }
     },
 };
