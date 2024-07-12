@@ -2,8 +2,7 @@
 
 @section('content')
     <div id="app">
-        <events-detail></events-detail>
-        <regis-users></regis-users>
+        <user-detail></user-detail>
     </div>
 @endsection
 

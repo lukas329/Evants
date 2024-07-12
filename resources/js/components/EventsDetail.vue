@@ -46,14 +46,12 @@ export default {
     methods: {
         getEventIdFromUrl() {
             const pathParts = window.location.pathname.split('/');
-            console.log(pathParts[pathParts.length - 1]);
             return pathParts[pathParts.length - 1];
         },
         async fetchEventData() {
             try {
                 const response = await axios.get(`/api/events/${this.eventId}`);
                 this.event = response.data;
-                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching event data:', error);
             }
