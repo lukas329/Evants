@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MyEventsController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('events', EventController::class);
     Route::get('user/{id}', [\App\Http\Controllers\UserController::class, 'detail']) ->name('users.detail');
     Route::resource('my-events', MyEventsController::class);
+    Route::post('/messages', [ChatsController::class, 'fetchMessagesBetween']);
+    Route::get('/chat/{id}', [ChatsController::class, 'index']);
+    Route::get('/messages', [ChatsController::class, 'fetchMessages']);
+    Route::post('/send-message', [ChatsController::class, 'sendMessage']);
 });
+
+
 
 require __DIR__.'/auth.php';

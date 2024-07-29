@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\ChatController;
 use App\Http\Controllers\api\EventsController;
 use App\Http\Controllers\api\MyEventsController;
 use App\Http\Controllers\api\RegistrationController;
+use App\Http\Controllers\api\StatsController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\SportController;
 use Illuminate\Http\Request;
@@ -23,4 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/sports', [SportController::class, 'index']);
     Route::get('registrations/{id}', [RegistrationController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'index']);
+    Route::get('/myId', [UserController::class, 'getMyId'])->name('user.myId');
+    Route::get('/chat/{id}', [ChatController::class, 'index']);
+    Route::get('/stats', [StatsController::class, 'index']);
 });
