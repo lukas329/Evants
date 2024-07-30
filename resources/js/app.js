@@ -12,6 +12,7 @@ import UserDetail from "./components/UserDetail.vue";
 import ChatMessages from "./components/ChatMessages.vue";
 import ChatForm from "./components/ChatForm.vue";
 import Dashboard from "./components/Dashboard.vue";
+import UserReview from "./components/UserReview.vue";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -45,6 +46,7 @@ app.component('user-detail', UserDetail);
 app.component('chat-messages', ChatMessages);
 app.component('chat-form', ChatForm);
 app.component('dashboard', Dashboard);
+app.component('user-review', UserReview);
 
 app.mount('#app');
 

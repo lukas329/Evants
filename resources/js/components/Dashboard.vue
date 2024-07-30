@@ -1,63 +1,68 @@
 <template>
     <div class="stats-container">
-        <div class="card" v-for="(stat, index) in statsList" :key="index">
-            <h3>{{ stat.title }}</h3>
-            <p v-if="stat.value">{{ stat.value }}</p>
-            <div v-if="stat.event">
-                <p>{{ stat.event.name }}</p>
-                <p>{{ stat.event.date }}</p>
-            </div>
+        <div class="card">
+            <h3>Number of Events Attended</h3>
+            <p>{{ stats.attendedEventsCount }}</p>
+        </div>
+        <div class="card">
+            <h3>Number of Registered Events</h3>
+            <p>{{ stats.registeredEventsCount }}</p>
+        </div>
+        <div class="card">
+            <h3>Reviews</h3>
+            <p>{{ reviewData.reviewCount }}</p>
+        </div>
+        <div class="card">
+            <h3>Rating</h3>
+            <p>{{ reviewData.rating }}</p>
+        </div>
+        <div class="card" v-if="stats.nextEvent">
+            <h3>Next Event</h3>
+            <p>Title: {{ stats.nextEvent.title }}</p>
+            <p>Date: {{ stats.nextEvent.event_date }}</p>
+            <p>Time: {{ stats.nextEvent.event_time }}</p>
+            <p>Location: {{ stats.nextEvent.location }}</p>
         </div>
     </div>
 </template>
+
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
     data() {
         return {
             stats: {
-                attendedEvents: 0,
-                kilometersRan: 0,
-                createdEvents: 0,
-                rating: 0
+                attendedEventsCount: 0,
+                registeredEventsCount: 0,
+                nextEvent:null,
             },
-            nextEvent: {
-                name: '',
-                date: ''
+            reviewData:{
+                reviewCount: 0,
+                rating: 0
             }
         };
     },
-    computed: {
-        statsList() {
-            return [
-                { title: 'Number of Events Attended', value: this.stats.attendedEvents },
-                { title: 'Kilometers Ran with Events', value: `${this.stats.kilometersRan} km` },
-                { title: 'Next Event Attended', event: this.nextEvent },
-                { title: 'Number of Events Created', value: this.stats.createdEvents },
-                { title: 'Rating', value: this.stats.rating }
-            ];
-        }
-    },
     mounted() {
-       // this.fetchStats();
-        //this.fetchNextEvent();
+        this.fetchUserStats();
+        this.fetchReviewCount();
     },
     methods: {
-        async fetchStats() {
+        async fetchUserStats() {
             try {
                 const response = await axios.get('/api/stats');
                 this.stats = response.data;
+                console.log(response.data);
             } catch (error) {
-                console.error('Error fetching stats:', error);
+                console.error('Error fetching user stats:', error);
             }
         },
-        async fetchNextEvent() {
-            try {
-                const response = await axios.get('/api/next-event');
-                this.nextEvent = response.data;
-            } catch (error) {
-                console.error('Error fetching next event:', error);
+        async fetchReviewCount(){
+            try{
+                const response = await axios.get('/api/reviewData');
+                this.reviewData = response.data;
+            }catch (error) {
+                console.error('Error fetching review stats:', error);
             }
         }
     }

@@ -109,7 +109,6 @@ export default {
         async createEvent() {
             try {
                 await axios.post('/events', this.form);
-                alert('Event created successfully');
                 this.form = { title: '', description: '', event_date: '', event_time: '', location: '', type: 'public', price: 0, sport_id: null };
                 window.location.href = '/events'; // Redirect to events index
             } catch (error) {

@@ -11,6 +11,9 @@
         <div class="card-body">
             <button @click="startConversation" class="btn btn-primary">Start Conversation</button>
         </div>
+        <div class="card-body">
+            <button @click="leaveReview" class="btn btn-primary">Leave a review</button>
+        </div>
 
     </div>
 </template>
@@ -54,6 +57,9 @@ export default {
         startConversation() {
             location.href = `/chat/${this.userId}`;
         },
+        leaveReview() {
+            location.href = `/review/${this.userId}`;
+        }
     },
 };
 </script>

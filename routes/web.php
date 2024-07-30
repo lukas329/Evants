@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/{id}', [ChatsController::class, 'index']);
     Route::get('/messages', [ChatsController::class, 'fetchMessages']);
     Route::post('/send-message', [ChatsController::class, 'sendMessage']);
+    Route::get('/review/{id}', [\App\Http\Controllers\ReviewController::class, 'index']);
 });
 
 
