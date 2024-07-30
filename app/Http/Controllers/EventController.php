@@ -69,30 +69,6 @@ class EventController extends Controller
         return response()->json(null, 204);
     }
 
-    public function join($event_id)
-    {
-        $user = Auth::user();
-
-        // Check if user is already registered for the event
-        $existingRegistration = Registration::where('id', $event_id)
-            ->where('user_id', $user->id)
-            ->first();
-
-        if ($existingRegistration) {
-            return redirect()->route('events.index')->with('error', 'You have already joined this event.');
-        }
-
-        // Register the user for the event
-        Registration::create([
-            'event_id' => $event_id,
-            'user_id' => $user->id,
-            'registration_date' => now(),
-            'payment_status' => 'free', // Adjust based on your logic
-        ]);
-
-        return redirect()->route('events.index')->with('success', 'You have successfully joined the event.');
-    }
-
     public function myEvents()
     {
         return view('events.my-events');

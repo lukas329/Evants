@@ -14,10 +14,15 @@ class EventsController extends Controller
     {
         $user = auth()->user();
 
-        $events = Event::with('sport')->get()->map(function($event) use ($user) {
-            $event->has_joined = Registration::where('event_id', $event->id)
-                ->where('user_id', $user->id)
-                ->exists();
+        $events = Event::with('sport')
+            ->where('organizer_id', '!=', $user->id)
+            ->orderBy('event_date', 'asc')
+            ->orderBy('event_time', 'asc')
+            ->get()
+            ->map(function($event) use ($user) {
+                $event->has_joined = Registration::where('event_id', $event->id)
+                    ->where('user_id', $user->id)
+                    ->exists();
             return $event;
         });
 

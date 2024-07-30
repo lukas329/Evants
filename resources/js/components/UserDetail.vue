@@ -8,6 +8,12 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">{{ user.email }}</li>
         </ul>
+        <div class="card-body">
+            <button @click="startConversation" class="btn btn-primary">Start Conversation</button>
+        </div>
+        <div class="card-body">
+            <button @click="leaveReview" class="btn btn-primary">Leave a review</button>
+        </div>
 
     </div>
 </template>
@@ -47,6 +53,12 @@ export default {
                     console.error('Error fetching user:', error);
                     this.errorMessage = 'Error fetching events.';
                 });
+        },
+        startConversation() {
+            location.href = `/chat/${this.userId}`;
+        },
+        leaveReview() {
+            location.href = `/review/${this.userId}`;
         }
     },
 };

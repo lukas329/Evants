@@ -81,6 +81,7 @@
 <script>
 import axios from 'axios';
 import {tryCatch} from "alpinejs/src/utils/error.js";
+import moment from "moment";
 
 export default {
     data() {
@@ -128,7 +129,9 @@ export default {
                 }
 
                 await axios.put(`/api/events/${this.event.id}`, this.event)
-                    .then(window.location.href = '/events/my-events');
+                    .then(
+                        ()=>window.location.href = '/events/my-events'
+                    );
             } catch (error) {
                 console.error('Error updating event:', error);
             }
