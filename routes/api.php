@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/events/{id}', [EventsController::class, 'show']);
     Route::put('/events/{id}', [EventsController::class, 'update']);
     Route::get('/events', [EventsController::class, 'index']);
+    Route::post('/events/{event}/join', [RegistrationController::class, 'join'])->name('events.join');
+    Route::post('/events/{event}/cancel', [RegistrationController::class, 'cancelEvent']);
     Route::delete('events/{id}', [EventsController::class, 'destroy']);
     Route::get('/my-events', [MyEventsController::class, 'index']);
     Route::get('/sports', [SportController::class, 'index']);

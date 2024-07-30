@@ -27,11 +27,10 @@
                     <td>${{ event.price }}</td>
                     <td>
                         <button
-                            class="btn btn-primary"
-                            @click.stop="joinEvent(event.id)"
-                            :disabled="event.has_joined"
+                            :class="['btn', event.has_joined ? 'btn-danger' : 'btn-primary']"
+                            @click.stop="toggleEventRegistration(event.id, event.has_joined)"
                         >
-                            Join
+                            {{ event.has_joined ? 'Cancel' : 'Join' }}
                         </button>
                     </td>
                 </tr>
@@ -59,6 +58,13 @@ export default {
         this.fetchEvents();
     },
     methods: {
+        toggleEventRegistration(eventId, hasJoined) {
+            if (hasJoined) {
+                this.cancelEvent(eventId);
+            } else {
+                this.joinEvent(eventId);
+            }
+        },
         fetchEvents() {
             axios
                 .get('/api/events')
@@ -73,7 +79,7 @@ export default {
         },
         joinEvent(eventId) {
             axios
-                .post(`/events/${eventId}/join`, {}, {
+                .post(`api/events/${eventId}/join`, {}, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json',
@@ -92,6 +98,20 @@ export default {
                     }
                 });
         },
+        async cancelEvent(eventId) {
+            try {
+                await axios.post(`/api/events/${eventId}/cancel`);
+                this.updateEventStatus(eventId, false);
+            } catch (error) {
+                console.error('Error cancelling event:', error);
+            }
+        },
+        updateEventStatus(eventId, hasJoined) {
+            const event = this.events.find(event => event.id === eventId);
+            if (event) {
+                event.has_joined = hasJoined;
+            }
+        },
         redirectToDetail(eventId) {
             window.location.href = `/events/${eventId}`;
             console.log(eventId);
@@ -101,6 +121,41 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px; /* Set a fixed width for all buttons */
+    height: 40px; /* Set a fixed height for all buttons */
+    text-align: center;
+    display: inline-block;
+    line-height: 20px; /* Center the text vertically */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-same-size {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 .container {
     max-width: 800px;
     margin: auto;

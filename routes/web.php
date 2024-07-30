@@ -19,7 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('events/my-events',  [EventController::class, 'myEvents']) -> name('my-events.all');
-    Route::post('/events/{event}/join', [EventController::class, 'join'])->name('events.join');
     Route::resource('events', EventController::class);
     Route::get('user/{id}', [\App\Http\Controllers\UserController::class, 'detail']) ->name('users.detail');
     Route::resource('my-events', MyEventsController::class);
