@@ -26,6 +26,13 @@ class User extends Authenticatable
         'profile_picture',
         'created_at',
         'updated_at',
+        'profile_picture',
+        'date_of_birth',
+        'phone',
+        'role',
+        'status',
+        'bio',
+        'social_media_links'
     ];
 
     /**
@@ -36,6 +43,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'social_media_links' => 'array',
     ];
 
     /**

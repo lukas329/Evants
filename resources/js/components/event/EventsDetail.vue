@@ -20,6 +20,9 @@
                 <div v-else class="text-center">
                     <p>Loading event details...</p>
                 </div>
+                <div class="card-body">
+                    <button @click="leaveReview" class="btn btn-primary">Leave a review</button>
+                </div>
             </div>
         </div>
     </div>
@@ -55,6 +58,9 @@ export default {
             } catch (error) {
                 console.error('Error fetching event data:', error);
             }
+        },
+        leaveReview() {
+            location.href = `/event-review/${this.eventId}`;
         }
     }
 };

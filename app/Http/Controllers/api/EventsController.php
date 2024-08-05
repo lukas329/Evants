@@ -10,19 +10,49 @@ use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-
-        $events = Event::with('sport')
+        $query = Event::with('sport')
             ->where('organizer_id', '!=', $user->id)
             ->orderBy('event_date', 'asc')
-            ->orderBy('event_time', 'asc')
-            ->get()
-            ->map(function($event) use ($user) {
-                $event->has_joined = Registration::where('event_id', $event->id)
-                    ->where('user_id', $user->id)
-                    ->exists();
+            ->orderBy('event_time', 'asc');
+
+        // Apply filters
+        if ($request->has('joined') && $request->joined) {
+            $query->whereHas('registrations', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        }
+
+        if ($request->has('start_date') && $request->start_date) {
+            $query->where('event_date', '>=', $request->start_date);
+        }
+
+        if ($request->has('end_date') && $request->end_date) {
+            $query->where('event_date', '<=', $request->end_date);
+        }
+
+        if ($request->has('organizer_id') && $request->organizer_id) {
+            $query->where('organizer_id', $request->organizer_id);
+        }
+
+        if ($request->has('sport_id') && $request->sport_id) {
+            $query->where('sport_id', $request->sport_id);
+        }
+
+        if ($request->has('location') && $request->location) {
+            $query->where('location', 'like', '%' . $request->location . '%');
+        }
+
+        if ($request->has('type') && $request->type) {
+            $query->where('type', $request->type);
+        }
+
+        $events = $query->get()->map(function($event) use ($user) {
+            $event->has_joined = Registration::where('event_id', $event->id)
+                ->where('user_id', $user->id)
+                ->exists();
             return $event;
         });
 

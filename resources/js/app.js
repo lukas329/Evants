@@ -2,17 +2,19 @@ import './bootstrap';
 import { createApp } from 'vue';
 import Alpine from 'alpinejs';
 import axios from 'axios';
-import EventsByMe from "./components/EventsByMe.vue";
-import EventsDetail from "./components/EventsDetail.vue";
-import CreateNewEvent from "./components/CreateNewEvent.vue";
-import EventsIndex from "./components/EventsIndex.vue";
-import EditEvent from "./components/EditEvent.vue";
-import RegistratedUsers from "./components/RegistratedUsers.vue";
-import UserDetail from "./components/UserDetail.vue";
-import ChatMessages from "./components/ChatMessages.vue";
-import ChatForm from "./components/ChatForm.vue";
+import EventsByMe from "./components/event/EventsByMe.vue";
+import EventsDetail from "./components/event/EventsDetail.vue";
+import CreateNewEvent from "./components/event/CreateNewEvent.vue";
+import EventsIndex from "./components/event/EventsIndex.vue";
+import EditEvent from "./components/event/EditEvent.vue";
+import RegistratedUsers from "./components/user/RegistratedUsers.vue";
+import UserDetail from "./components/user/UserDetail.vue";
+import ChatMessages from "./components/chat/ChatMessages.vue";
+import ChatForm from "./components/chat/ChatForm.vue";
 import Dashboard from "./components/Dashboard.vue";
-import UserReview from "./components/UserReview.vue";
+import UserReview from "./components/user/UserReview.vue";
+import EventReview from "./components/event/EventReview.vue";
+import ProfileEdit from "./components/profile/ProfileEdit.vue";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -47,6 +49,8 @@ app.component('chat-messages', ChatMessages);
 app.component('chat-form', ChatForm);
 app.component('dashboard', Dashboard);
 app.component('user-review', UserReview);
+app.component('event-review', EventReview);
+app.component('profile-edit', ProfileEdit)
 
 app.mount('#app');
 

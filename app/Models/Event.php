@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\EventReviewController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,5 +39,9 @@ class Event extends Model
     public function reviews()
     {
         return $this->hasMany(UserReview::class);
+    }
+    public function receivedReviews()
+    {
+        return $this->hasMany(EventReviewController::class, 'event_id');
     }
 }
